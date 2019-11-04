@@ -40,20 +40,32 @@ namespace WebAPISample.Controllers
         public IHttpActionResult Post([FromBody]Movie value)
         {
             // Create movie in db logic
-            //still needs code
+            throw new NotImplementedException();
         }
 
         // PUT api/values/5
         public IHttpActionResult Put(int id, [FromBody]Movie value)
         {
             // Update movie in db logic
-            // still needs code
+            var foundMovie = Update(id, value);
+            if(foundMovie == null)
+            {
+                return NotFound();
+            }
+            return Ok(foundMovie);
+        }
+
+        private Movie Update(int id, Movie value)
+        {
+            //still needs to be coded out
+            throw new NotImplementedException();
         }
 
         // DELETE api/values/5
         public IHttpActionResult Delete(int id)
         {
             // Delete movie from db logic
+            throw new NotImplementedException();
         }
     }
 
