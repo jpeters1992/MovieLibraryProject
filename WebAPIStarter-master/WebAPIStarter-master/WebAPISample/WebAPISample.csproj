@@ -226,6 +226,10 @@
     <Compile Include="Migrations\201911041703019_AddGenre.Designer.cs">
       <DependentUpon>201911041703019_AddGenre.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911041736452_SeedData.cs" />
+    <Compile Include="Migrations\201911041736452_SeedData.Designer.cs">
+      <DependentUpon>201911041736452_SeedData.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -348,6 +352,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201911041703019_AddGenre.resx">
       <DependentUpon>201911041703019_AddGenre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911041736452_SeedData.resx">
+      <DependentUpon>201911041736452_SeedData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
