@@ -10,34 +10,48 @@ namespace WebAPISample.Controllers
 {
     public class MovieController : ApiController
     {
+        ApplicationDbContext context;
+        public MovieController()
+        {
+            context = new ApplicationDbContext();
+        }
+
         // GET api/values
-        public IEnumerable<string> Get()
+        public IHttpActionResult Get()
         {
             // Retrieve all movies from db logic
-            return new string[] { "movie1 string", "movie2 string" };
+            var movies = context.Movies.ToList();
+            return Ok(movies);
         }
 
         // GET api/values/5
-        public string Get(int id)
+        public IHttpActionResult Get(int id)
         {
             // Retrieve movie by id from db logic
-            return "value";
+            var movie = context.Movies.Find(id);
+            if(movie == null)
+            {
+                return NotFound();
+            }
+            return Ok(movie);
         }
 
         // POST api/values
-        public void Post([FromBody]Movie value)
+        public IHttpActionResult Post([FromBody]Movie value)
         {
             // Create movie in db logic
+            //still needs code
         }
 
         // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
+        public IHttpActionResult Put(int id, [FromBody]Movie value)
         {
             // Update movie in db logic
+            // still needs code
         }
 
         // DELETE api/values/5
-        public void Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
             // Delete movie from db logic
         }

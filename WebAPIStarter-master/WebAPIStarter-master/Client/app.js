@@ -1,8 +1,10 @@
 (function($){
     function processForm( e ){
         var dict = {
+			MovieId : this["movieId"].value,
         	Title : this["title"].value,
-        	Director: this["director"].value
+        	Director : this["director"].value,
+			Genre : this["genre"].value
         };
 
         $.ajax({
