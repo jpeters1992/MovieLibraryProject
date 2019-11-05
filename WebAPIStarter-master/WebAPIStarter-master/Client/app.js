@@ -1,4 +1,5 @@
 (function($){
+
     function processForm( e ){
         var dict = {
 			MovieId : this["movieId"].value,
@@ -22,8 +23,32 @@
         });
 
         e.preventDefault();
+
+
+        $('#my-form').submit( processForm );
     }
 
-    $('#my-form').submit( processForm );
+    function GetDetails(){
+        $.ajax({
+            url: 'https://localhost:44352/api/movie',
+            dataType: 'json',
+            type: 'get',
+            contentType: 'application/json',
+            success: function (data, textStatus, jQxhr) {
+                $('#movieTable').html('');
+                $.each(data, function (i) {
+                    appendMovie(data[i]);
+                });
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    
+
+
+
 })(jQuery);
 

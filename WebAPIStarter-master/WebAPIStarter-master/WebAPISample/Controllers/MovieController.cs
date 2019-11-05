@@ -37,28 +37,52 @@ namespace WebAPISample.Controllers
         }
 
         // POST api/values
-        public IHttpActionResult Post([FromBody]Movie value)
+        public IHttpActionResult Post([FromBody]Movie movie)
         {
             // Create movie in db logic
-            throw new NotImplementedException();
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            context.Movies.Add(movie);
+            context.SaveChanges();
+
+            return Ok(movie);
         }
 
         // PUT api/values/5
-        public IHttpActionResult Put(int id, [FromBody]Movie value)
+        public IHttpActionResult Put(int id, [FromBody]Movie movie)
         {
             // Update movie in db logic
-            var foundMovie = Update(id, value);
-            if(foundMovie == null)
+            var newMovie = Update(id, movie);
+            if(newMovie == null)
             {
                 return NotFound();
             }
-            return Ok(foundMovie);
+            return Ok(newMovie);
         }
 
-        private Movie Update(int id, Movie value)
+        
+        private Movie Update(int id, Movie movie)
         {
-            //still needs to be coded out
-            throw new NotImplementedException();
+            // Update movie in db logic
+            var newMovie = context.Movies.SingleOrDefault(m => m.MovieId == id);
+            if(newMovie == null || movie == null)
+            {
+                return null;
+            }
+            try
+            {
+                newMovie.Title = movie.Title;
+                newMovie.Director = movie.Director;
+                newMovie.Genre = movie.Genre;
+                context.SaveChanges();
+                return newMovie;
+            }
+            catch (Exception)
+            {
+                throw new NotImplementedException("ERROR: Unable to update database");
+            }
         }
 
         // DELETE api/values/5
