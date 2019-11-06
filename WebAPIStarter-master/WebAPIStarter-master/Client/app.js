@@ -15,7 +15,7 @@
             contentType: 'application/json',
             data: JSON.stringify(dict),
             success: function( data, textStatus, jQxhr ){
-                $('#response pre').html( data );
+                GetMovieDetails();
             },
             error: function( jqXhr, textStatus, errorThrown ){
                 console.log( errorThrown );

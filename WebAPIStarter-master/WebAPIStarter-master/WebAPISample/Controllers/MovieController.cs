@@ -24,7 +24,7 @@ namespace WebAPISample.Controllers
         // GET api/values
         public IHttpActionResult Get()
         {
-            // Retrieve all movies from db logic
+            // Retrieve ALL movies from db logic
             var movies = context.Movies.ToList();
             return Ok(movies);
         }
@@ -32,7 +32,7 @@ namespace WebAPISample.Controllers
         // GET api/values/5
         public IHttpActionResult Get(int id)
         {
-            // Retrieve movie by id from db logic
+            // Retrieve A movie by id from db logic
             var movie = context.Movies.Find(id);
             if(movie == null)
             {
@@ -101,12 +101,12 @@ namespace WebAPISample.Controllers
             }
         }
 
-        // DELETE api/values/5
-        public IHttpActionResult Delete(int id)
-        {
-            // Delete movie from db logic
-            throw new NotImplementedException();
-        }
+        //// DELETE api/values/5
+        //public IHttpActionResult Delete(int id)
+        //{
+        //    // Delete movie from db logic
+        //    throw new NotImplementedException();
+        //}
     }
 
 }
