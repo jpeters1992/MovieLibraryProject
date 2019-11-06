@@ -22,22 +22,22 @@
             }
         });
 
-        e.preventDefault();
-
-
-        $('#my-form').submit( processForm );
+        e.preventDefault(); 
+        $('#my-form button').html("Add Movie");
+        $('#formMovieId').val(null);
+        $('#my-form')[0].reset();
     }
 
-    function GetDetails(){
+    function GetMovieDetails(){
         $.ajax({
             url: 'https://localhost:44352/api/movie',
             dataType: 'json',
             type: 'get',
             contentType: 'application/json',
             success: function (data, textStatus, jQxhr) {
-                $('#movieTable').html('');
+                $('#MovieTable').html('');
                 $.each(data, function (i) {
-                    appendMovie(data[i]);
+                    AddMovie(data[i]);
                 });
             },
             error: function (jqXhr, textStatus, errorThrown) {
@@ -46,9 +46,35 @@
         });
     }
 
-    
+     function AddMovie(data){
+        $('#MovieTable').append("<tr>" +
+            "<td class=\"title\">" + data.Title + "</td>" +
+            "<td class=\"director\">" + data.Director + "</td>" +
+            "<td class=\"genre\">" + data.Genre + "</td>" +
+            "<td hidden class=\"movieId\">" + data.MovieId + "</td>" +
+            "<td><button class=\"updateMovie\" type=\"button\">Update Movie</button></td></tr>");
+            
+            $('.updateMovie').on('click', UpdateMovie);
+    }
 
+     function UpdateMovie(){
+        $('#my-form button').html("Update Movie");
 
+        var text = $(this).closest('tr').find('.title').text();
+        $("#formTitle").val(text);
+
+        text = $(this).closest('tr').find('.director').text();
+        $("#formDirector").val(text);
+
+        text = $(this).closest('tr').find('.genre').text();
+        $("#formGenre").val(text);
+
+        text = $(this).closest('tr').find('.movieId').text();
+        $("#formMovieId").val(text);
+    }
+
+     GetMovieDetails();
+    $('#my-form').submit( processForm );
 
 })(jQuery);
 

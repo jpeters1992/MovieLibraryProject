@@ -10,11 +10,16 @@ namespace WebAPISample.Controllers
 {
     public class MovieController : ApiController
     {
+        //MEMBER VARIABLES
         ApplicationDbContext context;
+
+        //CONSTRUCTOR
         public MovieController()
         {
             context = new ApplicationDbContext();
         }
+
+        //MEMBER METHODS 
 
         // GET api/values
         public IHttpActionResult Get()
@@ -37,51 +42,62 @@ namespace WebAPISample.Controllers
         }
 
         // POST api/values
-        public IHttpActionResult Post([FromBody]Movie movie)
+        public IHttpActionResult Post([FromBody]Movie value)
         {
             // Create movie in db logic
+            var movieInDb = context.Movies.SingleOrDefault(m => m.MovieId == value.MovieId);
+            if (movieInDb == null)
+            {
+                try
+                {
+                    var newMovie = context.Movies.Add(value);
+                    context.SaveChanges();
+                    return Content(HttpStatusCode.Created, newMovie);
+                }
+                catch (Exception)
+                {
+                    return InternalServerError(new Exception("ERROR: Unable to create new row in database from supplied data"));
+                }
 
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            context.Movies.Add(movie);
-            context.SaveChanges();
-
-            return Ok(movie);
+            }
+            else
+            {
+                return Ok(Update(movieInDb.MovieId, value));
+            }
         }
 
         // PUT api/values/5
-        public IHttpActionResult Put(int id, [FromBody]Movie movie)
+        public IHttpActionResult Put(int id, [FromBody]Movie value)
         {
             // Update movie in db logic
-            var newMovie = Update(id, movie);
-            if(newMovie == null)
+            var foundMovie = Update(id, value);
+            if(foundMovie == null)
             {
                 return NotFound();
             }
-            return Ok(newMovie);
+            return Ok(foundMovie);
         }
 
         
-        private Movie Update(int id, Movie movie)
+        private Movie Update(int id, Movie value)
         {
             // Update movie in db logic
-            var newMovie = context.Movies.SingleOrDefault(m => m.MovieId == id);
-            if(newMovie == null || movie == null)
+            var foundMovie = context.Movies.SingleOrDefault(m => m.MovieId == id);
+            if(foundMovie == null || value == null)
             {
                 return null;
             }
             try
             {
-                newMovie.Title = movie.Title;
-                newMovie.Director = movie.Director;
-                newMovie.Genre = movie.Genre;
+                foundMovie.Title = value.Title;
+                foundMovie.Director = value.Director;
+                foundMovie.Genre = value.Genre;
                 context.SaveChanges();
-                return newMovie;
+                return foundMovie;
             }
             catch (Exception)
             {
-                throw new NotImplementedException("ERROR: Unable to update database");
+                throw new Exception("ERROR: Unable to update database");
             }
         }
 
