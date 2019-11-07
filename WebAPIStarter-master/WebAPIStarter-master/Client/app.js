@@ -18,11 +18,13 @@
                 GetMovieDetails();
             },
             error: function( jqXhr, textStatus, errorThrown ){
-                console.log( errorThrown );
+                console.log(errorThrown);
             }
         });
 
-        e.preventDefault(); 
+        e.preventDefault();
+		
+		/* Add Movie Button */
         $('#my-form button').html("Add Movie");
         $('#formMovieId').val(null);
         $('#my-form')[0].reset();
@@ -56,7 +58,7 @@
             
             $('.updateMovie').on('click', UpdateMovie);
     }
-
+		/* Update Movie Button */
      function UpdateMovie(){
         $('#my-form button').html("Update Movie");
 
